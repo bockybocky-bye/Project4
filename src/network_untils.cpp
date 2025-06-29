@@ -59,6 +59,18 @@ void callback(char* topic, byte* payload, unsigned int length) {
       Serial.println(setDegree);
     }
   }
+  else if (String(topic) == "esp32/cmd") {
+    StaticJsonDocument<100> doc;
+    DeserializationError error = deserializeJson(doc, msg);
+    if (!error && doc.containsKey("cmd")) {
+        String cmd = doc["cmd"];
+        if (cmd == "reset") {
+            Serial.println("🔄 ESP32 กำลังรีสตาร์ท...");
+            delay(500);
+            ESP.restart();
+        }
+    }
+  }
 }
 
 // -------------------- Task: MQTT Loop --------------------
