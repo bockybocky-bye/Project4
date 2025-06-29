@@ -38,6 +38,7 @@ void reconnect() {
     if (client.connect("ESP32_MPU6050")) {
       Serial.println("✅ connected");
       client.subscribe("esp32/set");
+      client.subscribe("esp32/cmd");
     } else {
       Serial.print("❌ failed, rc="); Serial.println(client.state());
       delay(2000);
